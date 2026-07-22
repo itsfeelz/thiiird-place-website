@@ -1,0 +1,13 @@
+# macOS system files
+.DS_Store
+._*
+
+# Editor/OS cruft
+Thumbs.db
+*.swp
+
+# Design mockup — not part of the live site
+blog-mockup.html
+
+# Unused leftover assets folder (logos are inline SVG)
+assets/

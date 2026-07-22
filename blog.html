@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Thiiird Place Listening Club</title>
+<meta name="description" content="Recaps, artist spotlights, and dispatches from the Thiiird Place Listening Club.">
+<style>
+  :root{
+    --black:#0A0A0A; --white:#F5F5F5; --gray:#8A8A8A;
+    --dark-gray:#141414; --med-gray:#1F1F1F; --line:#2A2A2A;
+    --gold:#FFD700; --gold-2:#FFA500; --maxw:1100px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--black);color:var(--white);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  .overline{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  h1,h2,h3{font-weight:900;letter-spacing:-.5px;line-height:1.1;}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;padding:13px 26px;border-radius:40px;cursor:pointer;border:1.5px solid var(--white);background:transparent;color:var(--white);font-family:inherit;transition:.2s;}
+  .btn:hover{background:var(--white);color:var(--black);}
+  .btn.gold{background:var(--gold);border-color:var(--gold);color:var(--black);}
+  .btn.gold:hover{background:var(--gold-2);border-color:var(--gold-2);}
+  .btn.sm{padding:9px 18px;font-size:13px;}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:50;background:rgba(10,10,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+  nav{display:flex;align-items:center;justify-content:space-between;height:74px;max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:1px;font-size:18px;}
+  .brand svg{width:34px;height:34px;}
+  .nlinks{display:flex;gap:28px;align-items:center;}
+  .nlinks a{font-size:14px;font-weight:600;opacity:.85;}
+  .nlinks a:hover{opacity:1;color:var(--gold);}
+  .nlinks a.active{color:var(--gold);opacity:1;}
+  .ncta{display:flex;gap:12px;align-items:center;}
+  .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:6px;}
+  .hamburger span{width:24px;height:2px;background:var(--white);display:block;}
+  .mobile-menu{display:none;flex-direction:column;padding:10px 24px 20px;border-bottom:1px solid var(--line);background:var(--black);}
+  .mobile-menu a{padding:12px 0;font-weight:600;border-bottom:1px solid var(--line);}
+  .mobile-menu .btn{margin-top:14px;justify-content:center;}
+  @media(max-width:820px){.nlinks,.ncta .btn{display:none;}.hamburger{display:flex;}.mobile-menu.open{display:flex;}}
+
+  /* header */
+  .bhead{padding:64px 0 40px;text-align:center;background:radial-gradient(700px 360px at 50% 0%,rgba(255,215,0,.10),transparent 60%);}
+  .bhead h1{font-size:clamp(38px,6vw,64px);margin-top:16px;}
+  .bhead p{color:var(--gray);font-size:18px;margin-top:16px;}
+
+  /* featured */
+  .featured{display:grid;grid-template-columns:1.15fr 1fr;background:var(--med-gray);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-bottom:44px;cursor:pointer;transition:.18s;}
+  .featured:hover{border-color:var(--gold);}
+  .featured .img{min-height:320px;background:linear-gradient(135deg,#3a2f10,#16213e);position:relative;}
+  .featured .img .k{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;opacity:.5;}
+  .featured .body{padding:40px;display:flex;flex-direction:column;justify-content:center;}
+  .featured .cat{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .featured h2{font-size:clamp(24px,3.4vw,32px);margin:14px 0;}
+  .featured p{color:var(--gray);font-size:15.5px;line-height:1.6;}
+  .featured .meta{margin-top:22px;font-size:13px;color:var(--gray);display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media(max-width:880px){.grid{grid-template-columns:1fr 1fr;}.featured{grid-template-columns:1fr;}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr;}}
+  .post{background:var(--med-gray);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:.18s;}
+  .post:hover{border-color:var(--gold);transform:translateY(-3px);}
+  .post .img{height:170px;position:relative;}
+  .post .img .k{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:42px;opacity:.5;}
+  .post .body{padding:20px;display:flex;flex-direction:column;flex:1;}
+  .post .cat{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);font-weight:700;}
+  .post h3{font-size:18px;margin:10px 0;line-height:1.3;}
+  .post p{color:var(--gray);font-size:13.5px;line-height:1.55;flex:1;}
+  .post .foot{margin-top:16px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--gray);}
+  .post .foot .arrow{color:var(--gold);font-weight:700;}
+
+  /* inline reader */
+  .reader{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;}
+  .reader.open{display:flex;}
+  .reader .sheet{width:100%;max-width:700px;background:var(--dark-gray);border:1px solid var(--line);border-radius:20px;overflow:hidden;}
+  .reader .top{height:210px;background:linear-gradient(135deg,#3a2f10,#16213e);display:flex;align-items:center;justify-content:center;font-size:62px;opacity:.9;position:relative;}
+  .reader .x{position:absolute;top:14px;right:16px;width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.5);border:0;color:#fff;font-size:22px;cursor:pointer;}
+  .reader .rbody{padding:38px;}
+  .reader .cat{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .reader h2{font-size:clamp(26px,4vw,34px);margin:12px 0;}
+  .reader .meta{font-size:13px;color:var(--gray);margin-bottom:24px;}
+  .reader .rbody p{color:#cfcfcf;font-size:16px;line-height:1.8;margin-bottom:18px;}
+  .reader .rbody h3{font-size:20px;margin:26px 0 10px;color:var(--white);}
+  .reader .rbody ol,.reader .rbody ul{color:#cfcfcf;font-size:16px;line-height:1.7;margin:0 0 18px 22px;}
+  .reader .rbody li{margin-bottom:10px;}
+  .reader .share{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--gray);}
+
+  footer{border-top:1px solid var(--line);margin-top:64px;padding:48px 0;}
+  .foot-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;}
+  .foot-links{display:flex;flex-direction:column;gap:12px;font-size:14px;}
+  .foot-links a:hover{color:var(--gold);}
+  .foot-bottom{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:var(--gray);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+</style>
+</head>
+<body>
+
+<!-- nav -->
+<header>
+  <nav>
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+        <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+        <circle cx="50" cy="50" r="2.5" fill="var(--black)"/>
+        <line x1="82" y1="22" x2="58" y2="44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="84" cy="20" r="5" fill="currentColor"/>
+      </svg>
+      THIIIRD PLACE
+    </a>
+    <div class="nlinks">
+      <a href="index.html#watch">Watch</a>
+      <a href="index.html#listen">Listen</a>
+      <a href="index.html#events">Events</a>
+      <a href="index.html#membership">Membership</a>
+      <a href="index.html#social-club" style="color:var(--gold)">Social Club</a>
+      <a href="blog.html" class="active">Blog</a>
+    </div>
+    <div class="ncta">
+      <a class="btn sm" href="index.html">Sign In</a>
+      <a class="btn sm gold" href="index.html#membership">Join the Club</a>
+      <button class="hamburger" onclick="document.getElementById('mm').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mm">
+    <a href="index.html#watch">Watch</a>
+    <a href="index.html#listen">Listen</a>
+    <a href="index.html#events">Events</a>
+    <a href="index.html#membership">Membership</a>
+    <a href="index.html#social-club" style="color:var(--gold)">Social Club</a>
+    <a href="blog.html" style="color:var(--gold)">Blog</a>
+    <a class="btn gold" href="index.html#membership">Join the Club</a>
+  </div>
+</header>
+
+<!-- header -->
+<section class="bhead">
+  <div class="wrap">
+    <div class="overline">The Journal</div>
+    <h1>Thiiird Place Blog</h1>
+    <p>Recaps, artist spotlights, and dispatches from the club.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <!-- featured (inline) -->
+  <div class="featured" onclick="openReader('feat')">
+    <div class="img"><div class="k">🎧</div></div>
+    <div class="body">
+      <div class="cat">Featured · Session Recap</div>
+      <h2>Inside TPLC.002: A Night of Soulful R&amp;B in Hollywood</h2>
+      <p>Feelz went deep into an R&amp;B and alternative bag at Flavors From Afar. Here's what the room felt like — and the records that defined the night.</p>
+      <div class="meta"><span>By Feelz</span><span>·</span><span>6 min read</span></div>
+    </div>
+  </div>
+
+  <!-- grid -->
+  <div class="grid">
+    <!-- full page -->
+    <a class="post" href="blog/artist-spotlight-feelz.html">
+      <div class="img" style="background:linear-gradient(135deg,#1a1a2e,#16213e)"><div class="k">🎤</div></div>
+      <div class="body">
+        <div class="cat">Artist Spotlight</div>
+        <h3>Feelz on Crate-Digging &amp; the Records That Built the Club</h3>
+        <p>A conversation about taste, the vinyl that started it all, and curating for a room instead of an algorithm.</p>
+        <div class="foot"><span>May 2026 · 7 min</span><span class="arrow">Read →</span></div>
+      </div>
+    </a>
+
+    <!-- inline -->
+    <div class="post" onclick="openReader('why')">
+      <div class="img" style="background:linear-gradient(135deg,#2a2410,#16213e)"><div class="k">🏠</div></div>
+      <div class="body">
+        <div class="cat">From the Founder</div>
+        <h3>Why We Built a Members-Only Listening Club</h3>
+        <p>The case for a private room — where the music, not the noise, is the whole point.</p>
+        <div class="foot"><span>Apr 2026 · 4 min</span><span class="arrow">Read →</span></div>
+      </div>
+    </div>
+
+    <!-- full page -->
+    <a class="post" href="blog/new-years-recap.html">
+      <div class="img" style="background:linear-gradient(135deg,#1a1a2e,#2a2410)"><div class="k">🎉</div></div>
+      <div class="body">
+        <div class="cat">Event Recap</div>
+        <h3>A Thiiird Place New Year's at the Loft</h3>
+        <p>Old friends and new friends ringing in the year together. The setlist, the room, and the moments that stuck.</p>
+        <div class="foot"><span>Jan 2026 · 5 min</span><span class="arrow">Read →</span></div>
+      </div>
+    </a>
+
+    <!-- inline -->
+    <div class="post" onclick="openReader('vault')">
+      <div class="img" style="background:linear-gradient(135deg,#241a2e,#16213e)"><div class="k">💿</div></div>
+      <div class="body">
+        <div class="cat">The Vault</div>
+        <h3>5 Mixes Every New Member Should Hear</h3>
+        <p>A starting point into the Thiiird Place sound — from late-night house to soulful Sunday sets.</p>
+        <div class="foot"><span>Mar 2026 · 3 min</span><span class="arrow">Read →</span></div>
+      </div>
+    </div>
+
+    <!-- full page -->
+    <a class="post" href="blog/social-club-invite.html">
+      <div class="img" style="background:linear-gradient(135deg,#2e2410,#1a1a2e)"><div class="k">✦</div></div>
+      <div class="body">
+        <div class="cat">Social Club</div>
+        <h3>How to Get Invited to the Social Club</h3>
+        <p>What the referral tier unlocks, who it's for, and how members bring new people in.</p>
+        <div class="foot"><span>Feb 2026 · 4 min</span><span class="arrow">Read →</span></div>
+      </div>
+    </a>
+
+    <!-- inline -->
+    <div class="post" onclick="openReader('gear')">
+      <div class="img" style="background:linear-gradient(135deg,#10242a,#16213e)"><div class="k">🎚️</div></div>
+      <div class="body">
+        <div class="cat">Notes</div>
+        <h3>Setting the Room: Our Sound System Philosophy</h3>
+        <p>Why we obsess over the listening environment — and the small touches that change everything.</p>
+        <div class="foot"><span>Feb 2026 · 5 min</span><span class="arrow">Read →</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div style="max-width:320px">
+        <div class="brand" style="margin-bottom:14px">
+          <svg viewBox="0 0 100 100" aria-hidden="true" style="width:32px;height:32px">
+            <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="3"/>
+            <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+            <line x1="82" y1="22" x2="58" y2="44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          THIIIRD PLACE
+        </div>
+        <p style="color:var(--gray);font-size:14px;line-height:1.6">A private listening club for music lovers to watch, listen, and connect.</p>
+      </div>
+      <div class="foot-links">
+        <a href="index.html#watch">Watch</a>
+        <a href="index.html#listen">Listen</a>
+        <a href="index.html#events">Events</a>
+        <a href="index.html#membership">Membership</a>
+        <a href="index.html#social-club" style="color:var(--gold)">Social Club</a>
+        <a href="blog.html" style="color:var(--gold)">Blog</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>A private listening club · members &amp; invite only.</div>
+      <div>© <span id="yr"></span> Thiiird Place Listening Club</div>
+    </div>
+  </div>
+</footer>
+
+<!-- inline reader -->
+<div class="reader" id="reader" onclick="if(event.target===this)closeReader()">
+  <div class="sheet">
+    <div class="top"><span id="r-emoji">🎧</span><button class="x" onclick="closeReader()" aria-label="Close">×</button></div>
+    <div class="rbody">
+      <div class="cat" id="r-cat"></div>
+      <h2 id="r-title"></h2>
+      <div class="meta" id="r-meta"></div>
+      <div id="r-text"></div>
+      <div class="share">Enjoyed this? <a href="index.html#membership" style="color:var(--gold);font-weight:600">Join the club ↗</a></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  const POSTS = {
+    feat:{e:'🎧',cat:'Featured · Session Recap',title:'Inside TPLC.002: A Night of Soulful R&B in Hollywood',meta:'By Feelz · 6 min read',
+      html:`<p>Some nights the room tells you what it wants. TPLC.002 was one of those — a slow build inside Flavors From Afar in Hollywood, where the food, the light, and the people all leaned toward something warm and unhurried.</p>
+      <p>Feelz settled into an R&B and alternative bag early and never really left it. The set moved like a conversation: a familiar vocal to pull everyone in, then a left turn into something nobody expected, then back home again before anyone felt lost.</p>
+      <h3>The records that defined the night</h3>
+      <p>The pocket stayed soulful all evening — neo-soul cuts bleeding into alternative R&B, a few deep edits that only land in a room that's actually listening. That's the whole bet of Thiiird Place: play for people who came to hear, not just to be out.</p>
+      <p>By the last hour the crowd had stopped checking phones. Strangers were talking. That's the metric we care about. Catch the full set on the Watch page, and keep an eye on Events for the next one.</p>`},
+    why:{e:'🏠',cat:'From the Founder',title:'Why We Built a Members-Only Listening Club',meta:'By Feelz · 4 min read',
+      html:`<p>The idea of a "third place" is simple: not home, not work, but the place you go to feel like yourself around other people. For a lot of us, that used to be a record store, a basement party, a friend's apartment with a good system. Those rooms are getting rarer.</p>
+      <p>So we built one on purpose. Members-only, invite-approved — not to be exclusive for its own sake, but because a room full of people who all showed up for the music feels completely different from one that didn't.</p>
+      <h3>Small by design</h3>
+      <p>We'd rather have a room that listens than a room that's full. Membership keeps the energy intentional: live sets, listening sessions, real events, and a community that actually knows each other.</p>
+      <p>If that sounds like your kind of room, there's a seat for you. Start with a free profile, and if someone vouches for you, the Social Club opens the rest.</p>`},
+    vault:{e:'💿',cat:'The Vault',title:'5 Mixes Every New Member Should Hear',meta:'By Feelz · 3 min read',
+      html:`<p>New to the club? Start here. Five mixes that map the range of the Thiiird Place sound — pull them up on the Listen page and let them run.</p>
+      <ol>
+        <li><b>TPLC.002 — Soulful R&B at Flavors From Afar.</b> The warm, unhurried end of the spectrum.</li>
+        <li><b>A Thiiird Place New Year's.</b> Hip-hop, R&B, dancehall, house, and afrobeats all in one night.</li>
+        <li><b>Sunday Service.</b> Gospel chops and neo-soul for a slow morning.</li>
+        <li><b>After Hours.</b> Late-night house and deep cuts for when the room thins out.</li>
+        <li><b>Crate Notes.</b> Feelz pulling the samples and originals side by side.</li>
+      </ol>
+      <p>Premium members get the full vault — secret mixes, unreleased sets, and downloads. The five above are the front door.</p>`},
+    gear:{e:'🎚️',cat:'Notes',title:'Setting the Room: Our Sound System Philosophy',meta:'By Feelz · 5 min read',
+      html:`<p>People remember how a room felt long after they forget the tracklist. A lot of that feeling is the system — and most of it is things you never consciously notice.</p>
+      <p>We tune for warmth over loudness. The goal isn't to overwhelm; it's to make a low conversation and a deep bassline coexist, so you can lean in to someone and still feel the kick in your chest.</p>
+      <h3>The small touches</h3>
+      <p>Speaker placement at ear height, not above the crowd. Lighting low enough to drop your guard. Enough space to move but close enough to feel collective. None of it is flashy. All of it matters.</p>
+      <p>It's the same philosophy behind everything we do: build the environment first, and the music does the rest.</p>`}
+  };
+
+  function openReader(id){
+    const p = POSTS[id]; if(!p) return;
+    document.getElementById('r-emoji').textContent = p.e;
+    document.getElementById('r-cat').textContent = p.cat;
+    document.getElementById('r-title').textContent = p.title;
+    document.getElementById('r-meta').textContent = p.meta;
+    document.getElementById('r-text').innerHTML = p.html;
+    document.getElementById('reader').classList.add('open');
+    document.body.style.overflow='hidden';
+    document.querySelector('.reader .sheet').scrollIntoView({block:'start'});
+  }
+  function closeReader(){ document.getElementById('reader').classList.remove('open'); document.body.style.overflow=''; }
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeReader();});
+</script>
+</body>
+</html>

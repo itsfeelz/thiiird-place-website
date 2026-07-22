@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thiiird Place Listening Club — A private home for music lovers</title>
+<meta name="description" content="Thiiird Place is a private listening club for music lovers to watch live sets, hear curated mixes, attend members-only events, and connect. Listen, share, and connect.">
+<style>
+  :root{
+    --black:#0A0A0A; --white:#F5F5F5; --gray:#8A8A8A;
+    --dark-gray:#141414; --med-gray:#1F1F1F; --line:#2A2A2A;
+    --gold:#FFD700; --gold-2:#FFA500;
+    --live:#FF4444; --success:#4CAF50;
+    --maxw:1200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--black); color:var(--white); line-height:1.5; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  section{position:relative;}
+  .overline{font-size:12px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); font-weight:700;}
+  h1,h2,h3,h4{font-weight:900; letter-spacing:-0.5px; line-height:1.05;}
+  .muted{color:var(--gray);}
+
+  /* ===== Buttons ===== */
+  .btn{display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:15px; padding:13px 26px; border-radius:40px; cursor:pointer; border:1.5px solid var(--white); background:transparent; color:var(--white); font-family:inherit; transition:.2s;}
+  .btn:hover{background:var(--white); color:var(--black);}
+  .btn.gold{background:var(--gold); border-color:var(--gold); color:var(--black);}
+  .btn.gold:hover{background:var(--gold-2); border-color:var(--gold-2);}
+  .btn.sm{padding:9px 18px; font-size:13px;}
+
+  /* ===== Nav ===== */
+  header{position:sticky; top:0; z-index:100; background:rgba(10,10,10,.82); backdrop-filter:blur(14px); border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; height:74px; max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  .brand{display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:1px; font-size:18px;}
+  .brand svg{width:34px; height:34px;}
+  .nav-links{display:flex; align-items:center; gap:30px;}
+  .nav-links a{font-size:14px; font-weight:600; color:var(--white); opacity:.85; transition:.15s;}
+  .nav-links a:hover{opacity:1; color:var(--gold);}
+  .nav-cta{display:flex; align-items:center; gap:12px;}
+  .hamburger{display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:6px;}
+  .hamburger span{width:24px; height:2px; background:var(--white); display:block;}
+
+  /* ===== Hero ===== */
+  .hero{padding:90px 0 70px; text-align:center; overflow:hidden;
+    background:radial-gradient(900px 500px at 50% -5%, rgba(255,215,0,.10), transparent 60%);}
+  .hero .turntable{width:200px; height:200px; margin:0 auto 30px; opacity:.95;}
+  .hero h1{font-size:clamp(40px,7vw,82px); max-width:14ch; margin:0 auto;}
+  .hero h1 .gold{color:var(--gold);}
+  .hero p.lead{font-size:clamp(16px,2.2vw,21px); color:var(--gray); max-width:60ch; margin:26px auto 0; line-height:1.6;}
+  .hero .actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:38px;}
+
+  /* ===== Marquee ===== */
+  .marquee{border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:20px 0; overflow:hidden; white-space:nowrap; background:var(--dark-gray);}
+  .marquee .track{display:inline-block; animation:scroll 28s linear infinite;}
+  .marquee span{font-size:22px; font-weight:900; letter-spacing:1px; margin:0 26px; color:var(--gray);}
+  .marquee span b{color:var(--gold);}
+  @keyframes scroll{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+
+  /* ===== Section shell ===== */
+  .block{padding:84px 0;}
+  .block.alt{background:var(--dark-gray);}
+  .sec-head{max-width:760px; margin-bottom:48px;}
+  .sec-head h2{font-size:clamp(30px,4.5vw,48px);}
+  .sec-head p{color:var(--gray); font-size:18px; margin-top:16px; line-height:1.6;}
+
+  /* ===== Watch ===== */
+  .live-grid{display:grid; grid-template-columns:1.6fr 1fr; gap:24px;}
+  .panel{background:var(--med-gray); border:1px solid var(--line); border-radius:18px; overflow:hidden;}
+  .panel .embed{width:100%; border:0; display:block; background:#000;}
+  .embed iframe{width:100%; height:100%; border:0; display:block;}
+  .twitch-ph{height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; text-align:center; padding:24px;
+    background:linear-gradient(135deg, rgba(145,70,255,.18), rgba(100,65,165,.06)); color:var(--white);}
+  .twitch-ph .tg{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#fff;background:linear-gradient(135deg,#6441A5,#9146FF);}
+  .twitch-ph p{font-size:13px; color:var(--gray); max-width:38ch; line-height:1.5;}
+  .panel .pad{padding:18px 20px;}
+  .badge-live{display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:700; letter-spacing:1px; color:var(--live);}
+  .badge-live .d{width:8px;height:8px;border-radius:50%;background:var(--live); animation:pulse 1.4s infinite;}
+  @keyframes pulse{50%{opacity:.3}}
+  .panel h3{font-size:18px; margin-top:10px;}
+  .panel .sub{font-size:13px; color:var(--gray); margin-top:4px;}
+  .panel p.desc{font-size:14px; color:var(--gray); margin-top:12px; line-height:1.55;}
+  .vids{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;}
+  .vid{background:var(--med-gray); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .vid .thumb{position:relative; aspect-ratio:16/9; background:#000; cursor:pointer;}
+  .vid .thumb img{width:100%;height:100%;object-fit:cover;}
+  .vid .play{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;}
+  .vid .play b{width:62px;height:62px;border-radius:50%;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;font-size:22px;}
+  .vid .b{padding:16px 18px;}
+  .vid .b h3{font-size:16px; line-height:1.3;}
+  .vid .b p{font-size:13px; color:var(--gray); margin-top:8px; line-height:1.5;}
+  .vid .b .by{font-size:11px; color:var(--gray); margin-top:10px; text-transform:uppercase; letter-spacing:1px;}
+
+  /* ===== Listen ===== */
+  .listen-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .soon{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px;}
+  .soon .card{display:flex; align-items:center; gap:16px; background:var(--med-gray); border:1px solid var(--line); border-radius:16px; padding:22px;}
+  .soon .ic{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;flex-shrink:0;}
+  .soon .t{font-size:17px; font-weight:800;}
+  .soon .s{font-size:13px; color:var(--gray); margin-top:4px;}
+  .soon .tag{margin-left:auto; font-size:11px; font-weight:700; letter-spacing:1px; color:var(--gray); border:1px solid var(--line); padding:6px 12px; border-radius:30px; white-space:nowrap;}
+
+  /* ===== Events ===== */
+  .events-grid{display:grid; grid-template-columns:340px 1fr; gap:36px; align-items:start;}
+  .cal{background:var(--med-gray); border:1px solid var(--line); border-radius:18px; padding:22px;}
+  .cal .mo{font-size:18px; font-weight:800; margin-bottom:16px;}
+  .cal table{width:100%; border-collapse:collapse;}
+  .cal th{font-size:11px; color:var(--gray); font-weight:700; padding-bottom:10px;}
+  .cal td{text-align:center; font-size:13px; padding:7px 0; color:var(--white);}
+  .cal td.dim{color:#444;}
+  .cal td .day{display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%;}
+  .cal td.event .day{background:var(--gold); color:var(--black); font-weight:800; cursor:pointer;}
+  .cal td.today .day{border:1.5px solid var(--gray);}
+  .ev-list{display:flex; flex-direction:column; gap:20px;}
+  .ev{display:grid; grid-template-columns:88px 1fr; gap:20px; background:var(--med-gray); border:1px solid var(--line); border-radius:16px; padding:20px; cursor:pointer; transition:.2s;}
+  .ev:hover{border-color:var(--gold);}
+  .ev .date{background:linear-gradient(135deg,#1a1a2e,#16213e); border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 0;}
+  .ev .date .m{font-size:12px; letter-spacing:1px; color:var(--gray);}
+  .ev .date .d{font-size:30px; font-weight:900;}
+  .ev h3{font-size:21px;}
+  .ev .meta{display:flex; gap:18px; flex-wrap:wrap; margin-top:10px;}
+  .ev .meta span{font-size:13px; color:var(--gray); display:flex; align-items:center; gap:6px;}
+  .ev p.d{font-size:14px; color:var(--gray); margin-top:12px; line-height:1.55; display:none;}
+  .ev.open p.d{display:block;}
+  .ev .tickets{display:none; gap:10px; margin-top:14px; flex-wrap:wrap;}
+  .ev.open .tickets{display:flex;}
+  .ev .tk{border:1px solid var(--line); border-radius:10px; padding:8px 14px; font-size:13px;}
+  .ev .tk b{color:var(--gold);}
+  .ev .chips{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;}
+  .chip{font-size:12px; font-weight:700; padding:5px 12px; border-radius:30px;}
+  .chip.gold{background:rgba(255,215,0,.14); color:var(--gold);}
+  .chip.spots{background:rgba(255,255,255,.08); color:var(--white);}
+  .chip.price{background:transparent; border:1px solid var(--line); color:var(--white);}
+
+  /* ===== Pillars ===== */
+  .pillars{display:grid; grid-template-columns:repeat(4,1fr); gap:30px; margin-top:50px;}
+  .pillar .n{font-size:13px; font-weight:800; color:var(--gold); letter-spacing:1px;}
+  .pillar h3{font-size:22px; margin-top:12px;}
+  .pillar p{font-size:14.5px; color:var(--gray); margin-top:12px; line-height:1.6;}
+
+  /* ===== Membership ===== */
+  .tiers{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .tier{background:var(--med-gray); border:1px solid var(--line); border-radius:20px; padding:34px;}
+  .tier.premium{border-color:var(--gold); background:linear-gradient(180deg, rgba(255,215,0,.06), var(--med-gray));}
+  .tier .name{display:flex; align-items:center; gap:10px; font-size:14px; font-weight:800; letter-spacing:1px; text-transform:uppercase;}
+  .tier.premium .name{color:var(--gold);}
+  .tier .price{font-size:46px; font-weight:900; margin:18px 0 4px;}
+  .tier .price small{font-size:16px; color:var(--gray); font-weight:600;}
+  .tier ul{list-style:none; margin:24px 0; display:flex; flex-direction:column; gap:14px;}
+  .tier li{display:flex; gap:12px; font-size:14.5px; line-height:1.4;}
+  .tier li .ck{color:var(--gold); flex-shrink:0; font-weight:900;}
+  .tier li .x{color:#555; flex-shrink:0;}
+  .tier li.off{color:#666;}
+  .tier .btn{width:100%; justify-content:center; margin-top:6px;}
+  .tokens{margin-top:30px; background:var(--dark-gray); border:1px solid var(--line); border-radius:18px; padding:28px; display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;}
+  .tokens h3{font-size:24px;}
+  .tokens p{color:var(--gray); margin-top:10px; font-size:14.5px; line-height:1.6;}
+  .packs{display:grid; grid-template-columns:repeat(2,1fr); gap:12px;}
+  .pack{border:1px solid var(--line); border-radius:12px; padding:14px; text-align:center;}
+  .pack .pn{font-size:12px; color:var(--gray); letter-spacing:1px; text-transform:uppercase;}
+  .pack .pt{font-size:20px; font-weight:900; margin-top:6px;}
+  .pack .pb{font-size:11px; color:var(--gold); margin-top:4px;}
+
+  /* ===== Sign-in modal ===== */
+  .modal-overlay{position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.72); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal-card{position:relative; width:100%; max-width:420px; background:var(--med-gray); border:1px solid rgba(255,215,0,.25); border-radius:22px; padding:40px 32px 32px; text-align:center;}
+  .modal-card .mlogo{width:54px; height:54px; margin:0 auto 14px;}
+  .modal-card h3{font-size:24px;}
+  .modal-card .ms{color:var(--gray); font-size:14px; margin-top:8px;}
+  .modal-card form{display:grid; gap:14px; margin-top:24px; text-align:left;}
+  .modal-card input{background:var(--black); border:1px solid var(--line); border-radius:10px; padding:13px 15px; color:var(--white); font-family:inherit; font-size:14px;}
+  .modal-card input:focus{outline:none; border-color:var(--gold);}
+  .modal-card input::placeholder{color:#666;}
+  .modal-card .btn{width:100%; justify-content:center;}
+  .modal-card .form-status{font-size:13px; min-height:16px; text-align:center; line-height:1.45;}
+  .modal-card .links{margin-top:20px; font-size:13px; color:var(--gray); display:flex; flex-direction:column; gap:10px;}
+  .modal-card .links a{color:var(--gold); font-weight:600;}
+  .modal-close{position:absolute; top:14px; right:18px; background:none; border:0; color:var(--gray); font-size:26px; line-height:1; cursor:pointer;}
+  .modal-close:hover{color:var(--white);}
+
+  /* ===== Social Club ===== */
+  .club{background:
+      radial-gradient(800px 420px at 50% 0%, rgba(255,215,0,.10), transparent 60%),
+      linear-gradient(180deg, #0d0b06, #0A0A0A);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .club .invite{display:inline-flex; align-items:center; gap:9px; font-size:12px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--gold); border:1px solid rgba(255,215,0,.4); border-radius:30px; padding:8px 16px;}
+  .club .sec-head{margin-left:auto; margin-right:auto; text-align:center; max-width:760px;}
+  .club .sec-head h2{font-size:clamp(32px,5vw,56px); margin-top:20px;}
+  .club .sec-head h2 .gold{color:var(--gold);}
+  .perks{display:grid; grid-template-columns:repeat(2,1fr); gap:22px; margin:50px 0;}
+  .perk{display:flex; gap:18px; background:rgba(255,255,255,.03); border:1px solid var(--line); border-radius:18px; padding:26px;}
+  .perk:hover{border-color:rgba(255,215,0,.4);}
+  .perk .ic{width:54px; height:54px; border-radius:14px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:24px; background:linear-gradient(135deg, rgba(255,215,0,.18), rgba(255,165,0,.08)); border:1px solid rgba(255,215,0,.3);}
+  .perk h3{font-size:19px;}
+  .perk p{font-size:14px; color:var(--gray); margin-top:8px; line-height:1.55;}
+  .perk .lock{display:inline-block; margin-top:12px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--gold); font-weight:700;}
+  .apply{max-width:620px; margin:0 auto; background:var(--med-gray); border:1px solid rgba(255,215,0,.25); border-radius:22px; padding:38px;}
+  .apply h3{font-size:26px; text-align:center;}
+  .apply > p.sub{text-align:center; color:var(--gray); font-size:15px; margin-top:10px;}
+  .apply form{display:grid; gap:14px; margin-top:26px;}
+  .apply .two{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .apply input, .apply textarea, .apply select{background:var(--black); border:1px solid var(--line); border-radius:10px; padding:13px 15px; color:var(--white); font-family:inherit; font-size:14px; width:100%;}
+  .apply input:focus, .apply textarea:focus, .apply select:focus{outline:none; border-color:var(--gold);}
+  .apply input::placeholder, .apply textarea::placeholder{color:#666;}
+  .apply select{appearance:none; -webkit-appearance:none; color:#666; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%238A8A8A' stroke-width='1.6' fill='none' stroke-linecap='round'/></svg>"); background-repeat:no-repeat; background-position:right 15px center;}
+  .apply select.filled{color:var(--white);}
+  .apply select option{color:#000;}
+  .apply .field{display:flex; flex-direction:column; gap:6px;}
+  .apply .field .flab{font-size:12px; color:var(--gray); padding-left:2px;}
+  .apply input[type="date"]{color:#bbb;}
+  .apply .hint{font-size:12px; color:var(--gray); margin-top:-6px;}
+  .apply .btn{width:100%; justify-content:center; margin-top:4px;}
+  @media(max-width:700px){ .perks{grid-template-columns:1fr;} .apply .two{grid-template-columns:1fr;} .apply{padding:26px;} }
+
+  /* ===== Footer ===== */
+  footer{background:var(--dark-gray); border-top:1px solid var(--line); padding:70px 0 36px;}
+  .foot-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:50px;}
+  .news h3{font-size:24px;}
+  .news p{color:var(--gray); margin-top:10px; font-size:14.5px;}
+  .news form{display:grid; gap:12px; margin-top:22px; max-width:420px;}
+  .news input{background:var(--black); border:1px solid var(--line); border-radius:10px; padding:13px 15px; color:var(--white); font-family:inherit; font-size:14px;}
+  .news input::placeholder{color:#666;}
+  .news .chk{display:flex; align-items:center; gap:9px; font-size:13px; color:var(--gray);}
+  .foot-links{display:flex; flex-direction:column; gap:14px;}
+  .foot-links .h{font-size:12px; letter-spacing:2px; color:var(--gray); text-transform:uppercase; margin-bottom:6px;}
+  .foot-links a{font-size:15px; font-weight:600; opacity:.9;}
+  .foot-links a:hover{color:var(--gold);}
+  .foot-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:56px; padding-top:26px; border-top:1px solid var(--line); color:var(--gray); font-size:13px;}
+
+  /* ===== Responsive ===== */
+  @media(max-width:900px){
+    .nav-links, .nav-cta .btn{display:none;}
+    .hamburger{display:flex;}
+    .nav-cta .btn.gold.menu-show{display:none;}
+    .live-grid,.listen-grid,.soon,.vids,.events-grid,.tiers,.tokens,.foot-grid{grid-template-columns:1fr;}
+    .pillars{grid-template-columns:1fr 1fr;}
+    .mobile-menu.open{display:flex;}
+  }
+  @media(max-width:560px){ .pillars{grid-template-columns:1fr;} .vids{grid-template-columns:1fr;} }
+  .mobile-menu{display:none; flex-direction:column; gap:4px; padding:10px 24px 20px; border-bottom:1px solid var(--line); background:var(--black);}
+  .mobile-menu a{padding:12px 0; font-weight:600; border-bottom:1px solid var(--line);}
+  .mobile-menu .btn{margin-top:14px; justify-content:center;}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<header>
+  <nav>
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+        <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+        <circle cx="50" cy="50" r="2.5" fill="var(--black)"/>
+        <line x1="82" y1="22" x2="58" y2="44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="84" cy="20" r="5" fill="currentColor"/>
+      </svg>
+      THIIIRD PLACE
+    </a>
+    <div class="nav-links">
+      <a href="#watch">Watch</a>
+      <a href="#listen">Listen</a>
+      <a href="#events">Events</a>
+      <a href="#membership">Membership</a>
+      <a href="#social-club" style="color:var(--gold)">Social Club</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="nav-cta">
+      <button class="btn sm" type="button" onclick="openSignin()">Sign In</button>
+      <a class="btn sm gold menu-show" href="#membership">Join the Club</a>
+      <button class="hamburger" onclick="document.getElementById('mm').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mm">
+    <a href="#watch" onclick="closeMM()">Watch</a>
+    <a href="#listen" onclick="closeMM()">Listen</a>
+    <a href="#events" onclick="closeMM()">Events</a>
+    <a href="#membership" onclick="closeMM()">Membership</a>
+    <a href="#social-club" onclick="closeMM()" style="color:var(--gold)">Social Club</a>
+    <a href="blog.html" onclick="closeMM()">Blog</a>
+    <a href="#" onclick="closeMM();openSignin();return false;">Sign In</a>
+    <a class="btn gold" href="#social-club" onclick="closeMM()">Apply for Social Club</a>
+  </div>
+</header>
+
+<span id="top"></span>
+
+<!-- ===== SIGN-IN MODAL ===== -->
+<div class="modal-overlay" id="signin-modal" onclick="if(event.target===this)closeSignin()">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeSignin()" aria-label="Close">×</button>
+    <svg class="mlogo" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="var(--white)" stroke-width="3"/>
+      <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+      <line x1="82" y1="22" x2="58" y2="44" stroke="var(--white)" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <h3>Member Sign In</h3>
+    <div class="ms">Welcome back to Thiiird Place.</div>
+    <form onsubmit="signinSubmit(event)">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button class="btn gold" type="submit">Sign In</button>
+      <div class="form-status"></div>
+    </form>
+    <div class="links">
+      <a href="#" onclick="document.querySelector('#signin-modal .form-status').textContent='Password resets are handled in the Thiiird Place app for now.';return false;">Forgot password?</a>
+      <div>Not a member yet? <a href="#social-club" onclick="closeSignin()">Apply to the Social Club</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap">
+    <svg class="turntable" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="var(--white)" stroke-width="2"/>
+      <circle cx="50" cy="50" r="34" fill="none" stroke="var(--white)" stroke-width="1" opacity=".45"/>
+      <circle cx="50" cy="50" r="22" fill="none" stroke="var(--white)" stroke-width="1" opacity=".3"/>
+      <circle cx="50" cy="50" r="10" fill="var(--gold)"/>
+      <circle cx="50" cy="50" r="3" fill="var(--black)"/>
+      <line x1="86" y1="18" x2="60" y2="42" stroke="var(--white)" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="88" cy="16" r="5" fill="var(--white)"/>
+    </svg>
+    <div class="overline" style="margin-bottom:18px">Thiiird Place Listening Club</div>
+    <h1>Come As <span class="gold">You Are.</span></h1>
+    <p class="lead">A private space for music lovers to listen, share, and connect. Live DJ sets, curated mixes, members-only events, and a community built around the record.</p>
+    <div class="actions">
+      <a class="btn gold" href="#membership">Join the Club</a>
+      <a class="btn" href="#watch">Step Inside</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MARQUEE ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>HOUSE</span><span><b>•</b></span><span>TECHNO</span><span><b>•</b></span><span>JAZZ</span><span><b>•</b></span><span>NEO-SOUL</span><span><b>•</b></span><span>R&amp;B</span><span><b>•</b></span><span>AFROBEATS</span><span><b>•</b></span><span>HIP-HOP</span><span><b>•</b></span>
+    <span>HOUSE</span><span><b>•</b></span><span>TECHNO</span><span><b>•</b></span><span>JAZZ</span><span><b>•</b></span><span>NEO-SOUL</span><span><b>•</b></span><span>R&amp;B</span><span><b>•</b></span><span>AFROBEATS</span><span><b>•</b></span><span>HIP-HOP</span><span><b>•</b></span>
+  </div>
+</div>
+
+<!-- ===== WATCH ===== -->
+<section class="block" id="watch">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="overline">Watch</div>
+      <h2>Live sets &amp; rewinds.</h2>
+      <p>Tune in when the booth is live, or rewind through past sessions. DJ sets, listening parties, and community sessions — straight from the club.</p>
+    </div>
+
+    <div class="live-grid">
+      <div class="panel">
+        <div id="twitch-player" class="embed" style="height:380px"></div>
+        <div class="pad">
+          <span class="badge-live"><span class="d"></span> LIVE</span>
+          <h3>Thiiird Place LC</h3>
+          <div class="sub">twitch.tv/thiiirdplacelc</div>
+          <p class="desc">Watch live DJ sets, listening parties, and community sessions.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="pad" style="padding-bottom:0"><span class="overline" style="color:#9146FF">Chat</span></div>
+        <div id="twitch-chat" class="embed" style="height:430px"></div>
+      </div>
+    </div>
+
+    <div style="margin:42px 0 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
+      <span class="overline">⏪ Rewind — latest from the channel</span>
+      <a class="btn sm" href="https://www.youtube.com/channel/UCS9M7ooqNc3Q_kA-sbCAZQA" target="_blank" rel="noopener">View channel ↗</a>
+    </div>
+    <div class="panel">
+      <iframe class="embed" style="aspect-ratio:16/9; width:100%" src="https://www.youtube-nocookie.com/embed/videoseries?list=UUS9M7ooqNc3Q_kA-sbCAZQA" title="Thiiird Place — latest uploads" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="pad">
+        <h3>Latest sessions &amp; rewinds</h3>
+        <div class="sub">Auto-updates with the newest uploads from the Thiiird Place channel — use the playlist controls to browse.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LISTEN ===== -->
+<section class="block alt" id="listen">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="overline">Listen</div>
+      <h2>Mixes, sets &amp; sessions.</h2>
+      <p>The full catalog of Thiiird Place radio and curated playlists — wherever you listen.</p>
+    </div>
+
+    <div class="listen-grid">
+      <div class="panel">
+        <iframe class="embed" style="height:420px" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/feelz-thiiird-space-radio&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true" title="SoundCloud"></iframe>
+        <div class="pad">
+          <h3 style="color:#FF5500">SoundCloud</h3>
+          <div class="sub">Feelz — Thiiird Space Radio · Mixes, sets &amp; radio episodes</div>
+        </div>
+      </div>
+      <div class="panel">
+        <a href="https://open.spotify.com/user/12124673032" target="_blank" rel="noopener">
+          <div style="height:420px; background:linear-gradient(135deg,#1DB954,#0a0a0a); display:flex; align-items:center; justify-content:center; font-size:80px">🎧</div>
+        </a>
+        <div class="pad">
+          <h3 style="color:#1DB954">Spotify</h3>
+          <div class="sub">Thiiird Place Playlists · Curated playlists &amp; listening sessions</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soon">
+      <div class="card">
+        <div class="ic" style="background:linear-gradient(135deg,#FC3C44,#FF2D55)">♪</div>
+        <div><div class="t">Apple Music</div><div class="s">Playlists &amp; curated stations coming soon</div></div>
+        <div class="tag">Coming Soon</div>
+      </div>
+      <div class="card">
+        <div class="ic" style="background:linear-gradient(135deg,#000,#444)">≈</div>
+        <div><div class="t">Tidal</div><div class="s">Hi-fi playlists &amp; exclusives coming soon</div></div>
+        <div class="tag">Coming Soon</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EVENTS ===== -->
+<section class="block" id="events">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="overline">Events</div>
+      <h2>Upcoming events.</h2>
+      <p>Mark your calendar. Members RSVP with tokens — premium members get in free and unlock a one-week pre-sale window.</p>
+    </div>
+
+    <div class="events-grid">
+      <div class="cal">
+        <div class="mo" id="cal-mo">June 2026</div>
+        <table>
+          <thead><tr><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr></thead>
+          <tbody id="cal-body"></tbody>
+        </table>
+      </div>
+
+      <div class="ev-list">
+        <div class="ev" id="ev-summer" onclick="toggleEv('ev-summer')">
+          <div class="date"><div class="m" id="s-m">JUN</div><div class="d" id="s-d">12</div></div>
+          <div>
+            <h3>Summer Listening Session</h3>
+            <div class="meta"><span>🕒 <span id="s-t">Fri 8:00 PM</span></span><span>📍 Rooftop Lounge</span></div>
+            <div class="chips">
+              <span class="chip spots">27 spots left</span>
+              <span class="chip price">Free – 7 tokens</span>
+            </div>
+            <p class="d">Bring your favorite summer records. We'll be spinning vinyl all night on the rooftop. Full sound system setup with refreshments provided.<br><span class="muted">123 Vinyl Street, Brooklyn NY · Capacity 50</span></p>
+            <div class="tickets">
+              <span class="tk">Free — <b>Free</b></span>
+              <span class="tk">General Admission — <b>3 tokens</b></span>
+              <span class="tk">VIP — <b>7 tokens</b></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ev" id="ev-jazz" onclick="toggleEv('ev-jazz')">
+          <div class="date"><div class="m" id="j-m">JUN</div><div class="d" id="j-d">19</div></div>
+          <div>
+            <h3>Jazz &amp; Beats Night</h3>
+            <div class="meta"><span>🕒 <span id="j-t">Fri 8:00 PM</span></span><span>📍 The Basement Studio</span></div>
+            <div class="chips">
+              <span class="chip gold">👑 VIP Pre-Sale</span>
+              <span class="chip spots">24 spots left</span>
+              <span class="chip price">4 – 10 tokens</span>
+            </div>
+            <p class="d">An evening exploring the intersection of jazz and electronic music. Live musicians + DJ sets.<br><span class="muted">456 Beat Ave, Brooklyn NY · Capacity 30</span></p>
+            <div class="tickets">
+              <span class="tk">General Admission — <b>4 tokens</b></span>
+              <span class="tk">Premium — <b>10 tokens</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PILLARS ===== -->
+<section class="block alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="overline">The Club</div>
+      <h2>Built around the record.</h2>
+      <p>Everything you've been looking for in a music community — the sound, the people, the room — finally in one place.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><div class="n">01</div><h3>Listen Here</h3><p>Live DJ sets, curated mixes, and listening sessions across every platform you use. Discovery is the whole point.</p></div>
+      <div class="pillar"><div class="n">02</div><h3>Share Here</h3><p>Build a profile around your taste — favorite genres, artists, and the socials where you live. Find your people through the music.</p></div>
+      <div class="pillar"><div class="n">03</div><h3>Gather Here</h3><p>Members-only events with real tickets, RSVPs, and check-in. Premium members get free entry and early access.</p></div>
+      <div class="pillar"><div class="n">04</div><h3>Belong Here</h3><p>Invite-only and member-approved. A private room where the culture is the point and everyone showed up for the same reason.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MEMBERSHIP ===== -->
+<section class="block" id="membership">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="overline">Membership</div>
+      <h2>Become a member.</h2>
+      <p>Two tiers, both built around real access and real community. Pick the one that meets you where you are right now.</p>
+    </div>
+
+    <div class="tiers">
+      <div class="tier">
+        <div class="name">👤 Free</div>
+        <div class="price">$0</div>
+        <ul>
+          <li><span class="ck">✓</span> Member profile with bio &amp; social links</li>
+          <li><span class="ck">✓</span> Browse &amp; watch curated content</li>
+          <li><span class="ck">✓</span> View upcoming club events</li>
+          <li class="off"><span class="x">—</span> Monthly tokens</li>
+          <li class="off"><span class="x">—</span> Free event entry</li>
+          <li class="off"><span class="x">—</span> Pre-sale &amp; premium badge</li>
+        </ul>
+        <a class="btn" href="#top">Join Free</a>
+      </div>
+
+      <div class="tier premium">
+        <div class="name">👑 Premium</div>
+        <div class="price">$20<small> / month</small></div>
+        <ul>
+          <li><span class="ck">✓</span> Everything in Free</li>
+          <li><span class="ck">✓</span> 6 tokens monthly ($30 value) — 4 paid + 2 free</li>
+          <li><span class="ck">✓</span> Free event entry — no tokens needed</li>
+          <li><span class="ck">✓</span> 1-week pre-sale early access</li>
+          <li><span class="ck">✓</span> Gold premium badge on your profile</li>
+          <li><span class="ck">✓</span> Access to the TPLC music library</li>
+        </ul>
+        <a class="btn gold" href="#top">Go Premium — $20/mo</a>
+      </div>
+    </div>
+
+    <div class="tokens">
+      <div>
+        <div class="overline">Tokens</div>
+        <h3>One currency for the whole club.</h3>
+        <p>Each token is worth $5 and unlocks event tickets and perks. Premium members earn 6 every month — buy more anytime in packs.</p>
+      </div>
+      <div class="packs">
+        <div class="pack"><div class="pn">Single</div><div class="pt">1 token</div></div>
+        <div class="pack"><div class="pn">Popular</div><div class="pt">4 + 1</div><div class="pb">+1 bonus</div></div>
+        <div class="pack"><div class="pn">Value</div><div class="pt">10 + 2</div><div class="pb">+2 bonus</div></div>
+        <div class="pack"><div class="pn">Mega</div><div class="pt">20 + 5</div><div class="pb">+5 bonus</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOCIAL CLUB ===== -->
+<section class="block club" id="social-club">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="invite">◆ By Referral Only</span>
+      <h2>Thiiird Place <span class="gold">Social Club</span></h2>
+      <p>The inner circle. A referral-only tier for members who shape the culture — unlocking private spaces and perks beyond the public club. You're here because someone vouched for you.</p>
+    </div>
+
+    <div class="perks">
+      <div class="perk">
+        <div class="ic">🎚️</div>
+        <div>
+          <h3>Private Listening Rooms</h3>
+          <p>Members-only live sessions and recorded sets that never touch the public Watch page — intimate rooms, smaller crowds, deeper cuts.</p>
+          <span class="lock">🔒 Members only</span>
+        </div>
+      </div>
+      <div class="perk">
+        <div class="ic">🎟️</div>
+        <div>
+          <h3>Exclusive Events &amp; Pre-Sale</h3>
+          <p>Invite-only events plus the earliest RSVP window — ahead of premium pre-sale. The best nights, before anyone else hears about them.</p>
+          <span class="lock">🔒 Members only</span>
+        </div>
+      </div>
+      <div class="perk">
+        <div class="ic">💿</div>
+        <div>
+          <h3>The Vault — Bonus Mixes</h3>
+          <p>A members-only music vault: secret mixes, unreleased sets, curated playlists, and downloads from the Thiiird Place library.</p>
+          <span class="lock">🔒 Members only</span>
+        </div>
+      </div>
+      <div class="perk">
+        <div class="ic">👥</div>
+        <div>
+          <h3>Member Directory &amp; Chat</h3>
+          <p>A private community space — browse the member directory, find collaborators, and talk shop in the members-only chat.</p>
+          <span class="lock">🔒 Members only</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="apply">
+      <h3>Request Your Invitation</h3>
+      <p class="sub">Referred by a current member? Enter their details below. Applications are reviewed personally.</p>
+      <form action="https://api.web3forms.com/submit" method="POST" onsubmit="handleForm(event)" data-success="◆ Application received — we'll be in touch once it's reviewed.">
+        <input type="hidden" name="access_key" value="ac6d5f7e-70d8-4898-adaa-6f96af6f4c91">
+        <input type="hidden" name="subject" value="New Thiiird Place Social Club application">
+        <input type="hidden" name="from_name" value="Thiiird Place Social Club">
+        <div class="two">
+          <input type="text" name="first_name" placeholder="First name *" required>
+          <input type="text" name="last_name" placeholder="Last name *" required>
+        </div>
+        <div class="two">
+          <input type="email" name="email" placeholder="Email *" required>
+          <input type="tel" name="phone" placeholder="Phone number">
+        </div>
+        <div class="two" style="align-items:end">
+          <label class="field"><span class="flab">Date of birth</span><input type="date" name="date_of_birth"></label>
+          <input type="text" name="referred_by" placeholder="Who referred you? *" required>
+        </div>
+        <div class="two">
+          <input type="text" name="occupation" placeholder="What do you do for work? (occupation)">
+          <input type="text" name="passion" placeholder="What is your passion? (creative practice)">
+        </div>
+        <div class="two">
+          <select name="social_channel" onchange="this.classList.toggle('filled', !!this.value)">
+            <option value="" disabled selected>Social media channel</option>
+            <option>Instagram</option>
+            <option>Twitter / X</option>
+            <option>TikTok</option>
+            <option>Spotify</option>
+            <option>SoundCloud</option>
+            <option>YouTube</option>
+            <option>Other</option>
+          </select>
+          <input type="text" name="social_handle" placeholder="Social media handle">
+        </div>
+        <!-- Honeypot anti-spam field (hidden from humans) -->
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+        <button class="btn gold" type="submit">Submit Application</button>
+        <div class="form-status" style="font-size:14px; min-height:18px; text-align:center"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="news">
+        <div class="brand" style="margin-bottom:18px">
+          <svg viewBox="0 0 100 100" aria-hidden="true" style="width:34px;height:34px">
+            <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="3"/>
+            <circle cx="50" cy="50" r="9" fill="var(--gold)"/>
+            <line x1="82" y1="22" x2="58" y2="44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          THIIIRD PLACE
+        </div>
+        <h3>Join the mailing list.</h3>
+        <p>Be first to hear about new sessions, drops, and members-only events.</p>
+        <form id="signup-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleForm(event)" data-success="🎵 You're on the list — welcome to Thiiird Place.">
+          <input type="hidden" name="access_key" value="ac6d5f7e-70d8-4898-adaa-6f96af6f4c91">
+          <input type="hidden" name="subject" value="New Thiiird Place mailing list signup">
+          <input type="hidden" name="from_name" value="Thiiird Place Website">
+          <input type="text" name="name" placeholder="Name *" required>
+          <input type="email" name="email" placeholder="Email *" required>
+          <input type="tel" name="phone" placeholder="Phone">
+          <label class="chk"><input type="checkbox" name="consent" value="Yes"> Yes, keep me posted on Thiiird Place events.</label>
+          <!-- Honeypot anti-spam field (hidden from humans) -->
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+          <button class="btn gold" type="submit">Subscribe</button>
+          <div class="form-status" style="font-size:14px; min-height:18px"></div>
+        </form>
+      </div>
+
+      <div class="foot-links">
+        <div class="h">Explore</div>
+        <a href="#watch">Watch</a>
+        <a href="#listen">Listen</a>
+        <a href="#events">Events</a>
+        <a href="#membership">Membership</a>
+        <a href="#social-club" style="color:var(--gold)">Social Club</a>
+        <a href="blog.html">Blog</a>
+        <div class="h" style="margin-top:22px">Listen On</div>
+        <a href="https://soundcloud.com/feelz-thiiird-space-radio" target="_blank" rel="noopener">SoundCloud</a>
+        <a href="https://open.spotify.com/user/12124673032" target="_blank" rel="noopener">Spotify</a>
+        <a href="https://twitch.tv/thiiirdplacelc" target="_blank" rel="noopener">Twitch</a>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div>A private listening club · members &amp; invite only.</div>
+      <div>© <span id="yr"></span> Thiiird Place Listening Club</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  function closeMM(){document.getElementById('mm').classList.remove('open');}
+
+  // ===== Sign-in modal =====
+  function openSignin(){ document.getElementById('signin-modal').classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeSignin(){ document.getElementById('signin-modal').classList.remove('open'); document.body.style.overflow=''; }
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeSignin(); });
+  function signinSubmit(e){
+    e.preventDefault();
+    const s = e.target.querySelector('.form-status');
+    s.style.color = 'var(--gray)';
+    s.textContent = 'Member sign-in for the web is coming soon — for now, sign in through the Thiiird Place app.';
+  }
+
+  // ============================================================
+  //  TWITCH EMBED — parent must match the host the page is served
+  //  from. We set it dynamically. Twitch can't render from a local
+  //  file:// page, so there we show a "watch on Twitch" placeholder.
+  //  Once hosted (or served via http://localhost), the live player
+  //  and chat load automatically with the correct parent.
+  // ============================================================
+  (function(){
+    const CHANNEL = "thiiirdplacelc";
+    const host = location.hostname;                 // "" on file://
+    const isHosted = /^https?:$/.test(location.protocol) && host;
+    const player = document.getElementById('twitch-player');
+    const chat   = document.getElementById('twitch-chat');
+    if(!player || !chat) return;
+
+    if(isHosted){
+      player.innerHTML = `<iframe src="https://player.twitch.tv/?channel=${CHANNEL}&parent=${host}&muted=true" allowfullscreen title="Thiiird Place Live"></iframe>`;
+      chat.innerHTML   = `<iframe src="https://www.twitch.tv/embed/${CHANNEL}/chat?parent=${host}&darkpopout" title="Twitch chat"></iframe>`;
+    } else {
+      const ph = (title, note) => `
+        <div class="twitch-ph">
+          <div class="tg">TP</div>
+          <div style="font-weight:800; font-size:16px">${title}</div>
+          <p>${note}</p>
+          <a class="btn sm gold" href="https://twitch.tv/${CHANNEL}" target="_blank" rel="noopener">Open on Twitch ↗</a>
+        </div>`;
+      player.innerHTML = ph("Live player loads when hosted",
+        "Twitch only allows its player on a real domain. Once this site is published (or served at http://localhost), the live stream appears here automatically.");
+      chat.innerHTML = ph("Live chat loads when hosted",
+        "Twitch chat embeds the same way — it'll show up here once the site is hosted.");
+    }
+  })();
+
+  // ============================================================
+  //  WEB3FORMS HANDLER  →  emails feelzinthemix@gmail.com
+  //  Shared by the mailing-list form and the Social Club application.
+  //  Each form supplies its own hidden "subject" + a data-success
+  //  message. Tries inline (AJAX) submit first; on file:// (or if the
+  //  fetch is blocked) it falls back to a normal POST, which still
+  //  emails the inbox.
+  // ============================================================
+  async function handleForm(e){
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    const status = form.querySelector('.form-status');
+    const label = btn.textContent;
+    const success = form.dataset.success || "Thanks — we got it.";
+
+    // Inline AJAX only works over http(s). On file:// let the normal
+    // form POST proceed (don't preventDefault) so it still goes through.
+    if(location.protocol === 'file:'){
+      status.style.color = "var(--gray)";
+      status.textContent = "Sending… (you'll see a confirmation page)";
+      return; // native POST navigates to Web3Forms success page
+    }
+
+    e.preventDefault();
+    btn.disabled = true; btn.textContent = "Sending…";
+    status.style.color = "var(--gray)"; status.textContent = "";
+
+    try{
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method:"POST",
+        headers:{ "Accept":"application/json" },
+        body: new FormData(form)   // multipart; carries all hidden + visible fields
+      });
+      const out = await res.json();
+      if(out.success){
+        form.reset();
+        status.style.color = "var(--success)";
+        status.textContent = success;
+      }else{
+        status.style.color = "var(--live)";
+        status.textContent = out.message || "Something went wrong. Please try again.";
+      }
+    }catch(err){
+      status.style.color = "var(--gray)";
+      status.textContent = "Sending…";
+      form.submit();   // AJAX blocked — fall back to native POST
+    }finally{
+      btn.disabled = false; btn.textContent = label;
+    }
+  }
+
+  // ===== Inline YouTube playback =====
+  function playYT(el,id){
+    const f=document.createElement('iframe');
+    f.className='embed'; f.style.aspectRatio='16/9'; f.style.width='100%';
+    f.allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+    f.allowFullscreen=true;
+    f.src='https://www.youtube.com/embed/'+id+'?autoplay=1';
+    el.replaceWith(f);
+  }
+
+  // ===== Event accordion =====
+  function toggleEv(id){document.getElementById(id).classList.toggle('open');}
+
+  // ===== Dynamic dates: events at +7 / +14 days (mirrors SwiftUI sample data) =====
+  (function(){
+    const MON=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+    const M3=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    function ftime(d){let h=d.getHours();const ap=h>=12?'PM':'AM';h=h%12||12;return DOW[d.getDay()]+' '+h+':'+String(d.getMinutes()).padStart(2,'0')+' '+ap;}
+    const now=new Date();
+    const e1=new Date(now.getTime()+7*864e5);  e1.setHours(20,0,0,0);
+    const e2=new Date(now.getTime()+14*864e5); e2.setHours(20,0,0,0);
+    s_m.textContent=M3[e1.getMonth()]; s_d.textContent=e1.getDate(); s_t.textContent=ftime(e1);
+    j_m.textContent=M3[e2.getMonth()]; j_d.textContent=e2.getDate(); j_t.textContent=ftime(e2);
+
+    // Build calendar for the month containing the FIRST event
+    const calY=e1.getFullYear(), calM=e1.getMonth();
+    document.getElementById('cal-mo').textContent = MON[calM].charAt(0)+MON[calM].slice(1).toLowerCase()+' '+calY;
+    const first=new Date(calY,calM,1).getDay();
+    const days=new Date(calY,calM+1,0).getDate();
+    const evDays={}; if(e1.getMonth()===calM) evDays[e1.getDate()]='ev-summer'; if(e2.getMonth()===calM) evDays[e2.getDate()]='ev-jazz';
+    const tb=document.getElementById('cal-body'); let html='<tr>'; let col=0;
+    for(let i=0;i<first;i++){html+='<td class="dim"></td>';col++;}
+    for(let d=1;d<=days;d++){
+      if(col===7){html+='</tr><tr>';col=0;}
+      const isToday = (calY===now.getFullYear()&&calM===now.getMonth()&&d===now.getDate());
+      const cls=[]; if(evDays[d])cls.push('event'); if(isToday)cls.push('today');
+      const onclk = evDays[d] ? ` onclick="document.getElementById('${evDays[d]}').classList.add('open');document.getElementById('${evDays[d]}').scrollIntoView({behavior:'smooth',block:'center'})"` : '';
+      html+=`<td class="${cls.join(' ')}"${onclk}><span class="day">${d}</span></td>`; col++;
+    }
+    while(col<7){html+='<td class="dim"></td>';col++;}
+    html+='</tr>'; tb.innerHTML=html;
+  })();
+</script>
+</body>
+</html>
